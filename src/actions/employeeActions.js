@@ -212,75 +212,75 @@ const reformat_availability = (schedule) => {
   return reformatted_schedule
 }
 
-export const get_availability = (netid) => {
-  return (dispatch) => {
-    // Makes a GET call, fetching employee availability preferences
-    resource('GET', 'employee/available/'+netid).then(schedule => {
-      // Reformat schedule
-      let reformatted = reformat_availability(schedule)
-      dispatch({
-        type: "GET_AVAILABILITY",
-        schedule: reformatted
-      })
-    })
-  }
-}
+// export const get_availability = (netid) => {
+//   return (dispatch) => {
+//     // Makes a GET call, fetching employee availability preferences
+//     resource('GET', 'employee/available/'+netid).then(schedule => {
+//       // Reformat schedule
+//       let reformatted = reformat_availability(schedule)
+//       dispatch({
+//         type: "GET_AVAILABILITY",
+//         schedule: reformatted
+//       })
+//     })
+//   }
+// }
 
-export const get_scheduled = (netid) => {
-  return (dispatch) => {
-    // Makes a GET call, returns array of True False values, dependending on whether employee is scheduled
-    resource('GET', 'employee/scheduled/'+netid).then(schedule => {
-      // Reformat data
-      let reformatted = reformat_scheduled(schedule)
-      dispatch({
-        type: "GET_SCHEDULED",
-        schedule: reformatted
-      })
-    })
-  }
-}
+// export const get_scheduled = (netid) => {
+//   return (dispatch) => {
+//     // Makes a GET call, returns array of True False values, dependending on whether employee is scheduled
+//     resource('GET', 'employee/scheduled/'+netid).then(schedule => {
+//       // Reformat data
+//       let reformatted = reformat_scheduled(schedule)
+//       dispatch({
+//         type: "GET_SCHEDULED",
+//         schedule: reformatted
+//       })
+//     })
+//   }
+// }
 
-export const toggle_availability = (dayname, hour, available) => {
-  return (dispatch) => dispatch({
-    // Directs to specific case in reducer
-    type: "CHANGE_HOUR_"+dayname,
-    hour: hour,
-    // On click, available will change to the next type (red -> grey -> green -> yellow -> orange)
-    available: (available%4)+1,
-    changed: true
-  })
-}
+// export const toggle_availability = (dayname, hour, available) => {
+//   return (dispatch) => dispatch({
+//     // Directs to specific case in reducer
+//     type: "CHANGE_HOUR_"+dayname,
+//     hour: hour,
+//     // On click, available will change to the next type (red -> grey -> green -> yellow -> orange)
+//     available: (available%4)+1,
+//     changed: true
+//   })
+// }
 
-export const reset_changes = () => {
-  return (dispatch) => dispatch({
-    type: "RESET_CHANGED_PROPERTY"
-  })
-}
+// export const reset_changes = () => {
+//   return (dispatch) => dispatch({
+//     type: "RESET_CHANGED_PROPERTY"
+//   })
+// }
 
-export const save_availability = (netid, shifts) => {
-  return (dispatch) => {
-    console.log(shifts)
-    let payload = {shifts: shifts};
-    // Send a put call to backend
-    resource('PUT', 'employee/available/'+netid, payload).then(schedule => {
-      // If changes are saved, set shift 'changed' properties to false
-      dispatch(reset_changes())
-      console.log("Reset Changes!")
-      // If changes return 200, indicate that to user
-      dispatch({
-        type: "SAVE_AVAILABILITY",
-        success: true
-      })
-    })
-    .catch((err) => {
-      console.log(err)
-      console.log("Changes Not Implemented :(")
-      dispatch({
-        type: "SAVE_AVAILABILITY",
-        success: false
-      })
-    })
-  }
-}
+// export const save_availability = (netid, shifts) => {
+//   return (dispatch) => {
+//     console.log(shifts)
+//     let payload = {shifts: shifts};
+//     // Send a put call to backend
+//     resource('PUT', 'employee/available/'+netid, payload).then(schedule => {
+//       // If changes are saved, set shift 'changed' properties to false
+//       dispatch(reset_changes())
+//       console.log("Reset Changes!")
+//       // If changes return 200, indicate that to user
+//       dispatch({
+//         type: "SAVE_AVAILABILITY",
+//         success: true
+//       })
+//     })
+//     .catch((err) => {
+//       console.log(err)
+//       console.log("Changes Not Implemented :(")
+//       dispatch({
+//         type: "SAVE_AVAILABILITY",
+//         success: false
+//       })
+//     })
+//   }
+// }
 
 // export const
